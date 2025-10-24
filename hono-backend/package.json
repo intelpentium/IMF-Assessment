@@ -1,0 +1,43 @@
+{
+  "name": "hono-backend",
+  "version": "1.0.0",
+  "description": "Hono.js backend for fullstack application",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:push": "prisma db push",
+    "db:seed": "tsx prisma/seed.ts",
+    "postinstall": "prisma generate"
+  },
+  "keywords": [
+    "hono",
+    "typescript",
+    "postgresql",
+    "prisma",
+    "jwt",
+    "authentication"
+  ],
+  "author": "Fullstack Developer",
+  "license": "MIT",
+  "dependencies": {
+    "@hono/zod-validator": "^0.2.1",
+    "argon2": "^0.40.3",
+    "hono": "^4.5.0",
+    "jose": "^5.9.3",
+    "prisma": "^5.18.0",
+    "@prisma/client": "^5.18.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.4",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.2"
+  },
+  "prisma": {
+    "schema": "prisma/schema.prisma"
+  }
+}
