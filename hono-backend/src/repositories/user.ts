@@ -1,4 +1,4 @@
-import prisma from './client';
+import {prisma} from '../db/client';
 
 export const userRepository = {
   create: (data: { name: string; email: string; passwordHash: string }) => {

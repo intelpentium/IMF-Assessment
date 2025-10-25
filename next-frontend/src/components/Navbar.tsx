@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { getUser, logout } from '@/lib/auth';
-import { User } from '@/lib/types';
+import { User } from '@/lib/api';
 
 export default function Navbar() {
   const [user, setUser] = useState<User | null>(null);

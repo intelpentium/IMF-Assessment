@@ -20,7 +20,6 @@ export default function SignUpPage() {
     setLoading(true);
     setError(null);
 
-    // Validate passwords match
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       setLoading(false);
@@ -29,7 +28,6 @@ export default function SignUpPage() {
 
     try {
       await signup({ name, email, password });
-      // Redirect to sign in after successful sign up
       router.push('/auth/sign-in');
     } catch (err) {
       console.error('Sign up error:', err);

@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { createPost, updatePost } from '@/lib/api';
-import { Post } from '@/lib/types';
+import { createPost, updatePost, Post } from '@/lib/api';
 
 interface PostFormProps {
   post?: Post;

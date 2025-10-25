@@ -30,7 +30,6 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
     }
   };
 
-  // Generate visible page numbers (current page with 2 pages on each side)
   const startPage = Math.max(1, currentPage - 2);
   const endPage = Math.min(totalPages, currentPage + 2);
 

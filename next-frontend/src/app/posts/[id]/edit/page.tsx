@@ -1,9 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { getPost } from '@/lib/api';
+import {getPost, Post} from '@/lib/api';
 import PostForm from '@/components/PostForm';
-import { Post } from '@/lib/types';
 import Alert from '@/components/Alert';
 
 export default function EditPostPage({ params }: { params: { id: string } }) {
@@ -14,18 +13,26 @@ export default function EditPostPage({ params }: { params: { id: string } }) {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const postId = parseInt(params.id);
-        if (isNaN(postId)) {
+        const postId = Number(params.id);
+        if (!Number.isFinite(postId)) {
           setError('Invalid post ID');
+          setLoading(false);
           return;
         }
 
         const postData = await getPost(postId);
-        setPost(postData);
-        setError(null);
+
+        if (!postData || typeof postData !== 'object' || !('id' in postData)) {
+          setError('Post not found');
+          setPost(null);
+        } else {
+          setPost(postData as Post);
+          setError(null);
+        }
       } catch (err) {
         console.error('Error fetching post:', err);
         setError('Failed to load post');
+        setPost(null);
       } finally {
         setLoading(false);
       }

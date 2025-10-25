@@ -1,13 +1,15 @@
+import 'dotenv/config';
+
 import { Hono } from 'hono';
 import { logger } from 'hono/logger';
 import { secureHeaders } from 'hono/secure-headers';
 import { cors } from 'hono/cors';
 import { errorHandler } from './middlewares/error';
 import routes from './routes';
+import { simpleCors } from './middlewares/cors';
 
 const app = new Hono();
 
-// Global middlewares
 app.use(logger());
 app.use(secureHeaders());
 app.use(
@@ -17,10 +19,9 @@ app.use(
   })
 );
 
-// Register routes
 app.route('/api', routes);
 
-// Error handler
+app.use('*', simpleCors());
 app.onError(errorHandler);
 
 export default app;

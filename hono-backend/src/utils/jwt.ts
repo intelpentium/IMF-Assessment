@@ -6,7 +6,7 @@ const JWT_SECRET = new TextEncoder().encode(
 
 export const signToken = async (payload: { sub: string }) => {
   const iat = Math.floor(Date.now() / 1000);
-  const exp = iat + 7 * 24 * 60 * 60; // 7 days
+  const exp = iat + 7 * 24 * 60 * 60;
 
   return new SignJWT(payload)
     .setProtectedHeader({ alg: 'HS256' })

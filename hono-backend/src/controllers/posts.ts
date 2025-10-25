@@ -3,11 +3,9 @@ import { postRepository } from '../repositories/post';
 
 export const listPosts = async (c: Context) => {
   try {
-    // Ambil query params untuk pagination
     const page = parseInt(c.req.query('page') || '1');
     const limit = parseInt(c.req.query('limit') || '10');
-    
-    // Validasi pagination
+
     if (page < 1 || limit < 1 || limit > 100) {
       return c.json({ 
         error: { 
@@ -17,14 +15,12 @@ export const listPosts = async (c: Context) => {
       }, 400);
     }
 
-    // Ambil posts dengan pagination
     const { posts, total } = await postRepository.findAll({
       page,
       limit,
       includeAuthor: true,
     });
 
-    // Hitung totalPages
     const totalPages = Math.ceil(total / limit);
 
     return c.json({
@@ -121,7 +117,6 @@ export const updatePost = async (c: Context) => {
       }, 400);
     }
 
-    // Cek apakah post milik user
     const post = await postRepository.findById(id);
     if (!post) {
       return c.json({ 
@@ -172,7 +167,6 @@ export const deletePost = async (c: Context) => {
       }, 400);
     }
 
-    // Cek apakah post milik user
     const post = await postRepository.findById(id);
     if (!post) {
       return c.json({ 

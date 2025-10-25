@@ -1,9 +1,8 @@
-import { Context, HonoError } from 'hono';
+import type { Context } from 'hono';
 
-export const errorHandler = (err: HonoError, c: Context) => {
+export const errorHandler = (err: any, c: Context) => {
   console.error(err);
-  
-  // Jika error berasal dari validator
+
   if (err.message.includes('Validation error')) {
     return c.json({ 
       error: { 
@@ -13,7 +12,6 @@ export const errorHandler = (err: HonoError, c: Context) => {
     }, 400);
   }
 
-  // Jika error adalah Unauthorized
   if (err.message.includes('Unauthorized')) {
     return c.json({ 
       error: { 
@@ -23,7 +21,6 @@ export const errorHandler = (err: HonoError, c: Context) => {
     }, 401);
   }
 
-  // Error server lainnya
   return c.json({ 
     error: { 
       code: 'INTERNAL_ERROR', 

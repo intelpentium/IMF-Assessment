@@ -20,7 +20,6 @@ export default function SignInPage() {
 
     try {
       await signIn(email, password);
-      // Redirect to posts page after successful sign in
       router.push('/posts');
       router.refresh();
     } catch (err) {

@@ -1,4 +1,4 @@
-import prisma from './client';
+import {prisma} from '../db/client';
 
 interface FindAllOptions {
   page: number;

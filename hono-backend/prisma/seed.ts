@@ -4,11 +4,9 @@ import { hashPassword } from '../src/utils/hash';
 const prisma = new PrismaClient();
 
 async function main() {
-  // Hapus data sebelumnya (opsional)
   await prisma.post.deleteMany({});
   await prisma.user.deleteMany({});
 
-  // Buat user demo
   const hashedPassword = await hashPassword('P@ssw0rd!');
   const demoUser = await prisma.user.create({
     data: {
@@ -18,7 +16,6 @@ async function main() {
     },
   });
 
-  // Buat beberapa post demo
   await prisma.post.createMany({
     data: [
       {

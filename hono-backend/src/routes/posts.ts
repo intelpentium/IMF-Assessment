@@ -6,7 +6,6 @@ import { authGuard } from '../middlewares/auth';
 
 const postsRoutes = new Hono();
 
-// Schema validasi
 const createPostSchema = z.object({
   title: z.string().min(1, 'Title is required'),
   content: z.string().min(1, 'Content is required'),
@@ -17,7 +16,6 @@ const updatePostSchema = z.object({
   content: z.string().min(1, 'Content is required').optional(),
 });
 
-// Routes
 postsRoutes.get('/', listPosts);
 postsRoutes.get('/:id{[0-9]+}', getPost);
 postsRoutes.post('/', authGuard, zValidator('json', createPostSchema), createPost);

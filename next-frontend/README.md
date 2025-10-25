@@ -34,8 +34,8 @@ src/
 │   └── Alert.tsx           # Komponen alert
 ├── lib/
 │   ├── api.ts              # Wrapper API service
-│   ├── auth.ts             # Fungsi otentikasi
-│   └── types.ts            # Definisi tipe
+│   └── auth.ts             # Fungsi otentikasi
+│   └── http.ts             # Definisi konfigurasi HTTP
 └── styles/
     └── globals.css         # CSS global
 ```

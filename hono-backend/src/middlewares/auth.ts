@@ -1,34 +1,43 @@
-import { Context } from 'hono';
+import type { MiddlewareHandler } from 'hono';
+import { getCookie } from 'hono/cookie';
 import { verifyToken } from '../utils/jwt';
 import { userRepository } from '../repositories/user';
 
-export const authGuard = async (c: Context, next: () => Promise<void>) => {
+export const authGuard: MiddlewareHandler = async (c, next) => {
   try {
-    // Ambil token dari cookie
-    const token = c.req.cookie('token');
-    
+    const token = getCookie(c, 'token');
     if (!token) {
-      return c.json({ error: { code: 'UNAUTHORIZED', message: 'Access token required' } }, 401);
+      return c.json(
+          { error: { code: 'UNAUTHORIZED', message: 'User not authenticated' } },
+          401
+      );
     }
 
-    // Verifikasi token
     const payload = await verifyToken(token);
-    
-    if (!payload) {
-      return c.json({ error: { code: 'UNAUTHORIZED', message: 'Invalid or expired token' } }, 401);
+    if (!payload?.sub) {
+      return c.json(
+          { error: { code: 'UNAUTHORIZED', message: 'Invalid or expired token' } },
+          401
+      );
     }
 
-    // Dapatkan user berdasarkan payload
-    const user = await userRepository.findById(Number(payload.sub));
+    const userId = Number(payload.sub);
+    const user = await userRepository.findById(userId);
     if (!user) {
-      return c.json({ error: { code: 'UNAUTHORIZED', message: 'User not found' } }, 401);
+      return c.json(
+          { error: { code: 'UNAUTHORIZED', message: 'User not found' } },
+          401
+      );
     }
 
-    // Simpan userId ke dalam context
-    c.set('userId', Number(payload.sub));
-    
-    await next();
-  } catch (error) {
-    return c.json({ error: { code: 'UNAUTHORIZED', message: 'Authentication failed' } }, 401);
+    c.set('userId', userId);
+
+    // PENTING: kembalikan promise dari next()
+    return next();
+  } catch {
+    return c.json(
+        { error: { code: 'UNAUTHORIZED', message: 'Authentication failed' } },
+        401
+    );
   }
 };
