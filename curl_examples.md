@@ -1,5 +1,3 @@
-Berikut adalah contoh perintah cURL untuk semua endpoint utama backend:
-
 ### 1. Signup
 ```bash
 curl -X POST http://localhost:4000/api/auth/signup \
@@ -21,7 +19,6 @@ curl -X POST http://localhost:4000/api/auth/signin \
   }' \
   -c cookies.txt
 ```
-Catatan: Simpan cookie ke file `cookies.txt` untuk digunakan di permintaan selanjutnya
 
 ### 3. Me (dapatkan informasi user saat ini)
 ```bash
@@ -72,9 +69,3 @@ curl -X DELETE http://localhost:4000/api/posts/1 \
 curl -X POST http://localhost:4000/api/auth/signout \
   -b cookies.txt
 ```
-
-Catatan penting:
-- Cookie HttpOnly hanya bisa dikirim dan disimpan oleh browser atau tools seperti curl
-- Gunakan flag `-c` untuk menyimpan cookie dari response
-- Gunakan flag `-b` untuk mengirim cookie dari file ke request berikutnya
-- Endpoint proteksi (create/update/delete post) memerlukan cookie token
