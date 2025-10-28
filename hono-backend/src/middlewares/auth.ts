@@ -32,7 +32,6 @@ export const authGuard: MiddlewareHandler = async (c, next) => {
 
     c.set('userId', userId);
 
-    // PENTING: kembalikan promise dari next()
     return next();
   } catch {
     return c.json(
